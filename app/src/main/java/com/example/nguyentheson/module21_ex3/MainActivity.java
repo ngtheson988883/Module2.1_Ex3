@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         btnConvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!checkValidInput()){
+                    Toast.makeText(MainActivity.this, "Năm phải là số nguyên và lớn hơn 1900", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int year=Integer.parseInt(txtYear.getText().toString());
                 txtYinYear.setText(calCan(year)+" "+calChi(year));
             }
@@ -88,5 +93,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return "";
+    }
+    private boolean checkValidInput(){
+        txtYear = (EditText) findViewById(R.id.text_year);
+        try{
+            int year=Integer.parseInt(txtYear.getText().toString());
+            if(year<1900) return false;
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }
